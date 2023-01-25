@@ -20,12 +20,6 @@ class Object:
 
 class Image:
     
-    # Self properties
-    # self.img: image object to be processed/processed
-    # filename: name of the file containing the processed picture
-    # processTime: number of milliseconds it required to processed the image
-    # objects: array of DetectedObjects
-
     objects = []
 
     def __init__ (self, img):
