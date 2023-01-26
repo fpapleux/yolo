@@ -13,7 +13,7 @@ class Object:
         self.h = h
     
     def __str__ (self):
-        myString = f"{self.name} ({self.confidence * 100}%)"
+        myString = f"{self.name} ({round(self.confidence * 100,1)}%)"
         return myString
 
 
@@ -21,17 +21,22 @@ class Object:
 class Image:
     
     objects = []
+    processingTime = 0
+    filename = ""
+    img = None
 
     def __init__ (self, img):
         self.img = img.copy()
         self.filename = ""
-        self.processTime = 0
+        self.processingTime = 0
         self.objects = []
 
     def __str__ (self):
-        printForm =  f"\Processed Image:\n------------------\n"
+        printForm =  f"Processed Image:\n------------------\n"
+        printForm += f"Object passed to the constructor was a { type (self.img)}\n"
         printForm += f"processed file saved as: {self.filename}\n"
         printForm += f"Number of objects found: {len(self.objects)}\n"
+        printForm += f"Processing Time: {round(self.processingTime, 3)} seconds\n"
         for object in self.objects:
             printForm += f"{object.__str__()}\n"
         return printForm
@@ -53,6 +58,7 @@ class Image:
         t0 = time.time()
         outputs = net.forward(ln)
         t = time.time()
+        self.processingTime = t - t0
 
         r0 = blob[0, 0, :, :]
         r = r0.copy()
